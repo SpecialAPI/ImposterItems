@@ -28,11 +28,11 @@ namespace ImposterItems
             FakePrefab.MarkAsFakePrefab(projectile.gameObject);
             UnityEngine.Object.DontDestroyOnLoad(projectile);
             gun.DefaultModule.projectiles[0] = projectile;
-            projectile.baseData.damage = 9f;
+            projectile.baseData.damage = 12f;
             projectile.name = "ImposterGun_Projectile";
-            gun.DefaultModule.cooldownTime = 0.75f;
+            gun.DefaultModule.cooldownTime = 0.69f;
             gun.DefaultModule.numberOfShotsInClip = 8;
-            gun.reloadTime = 2f;
+            gun.reloadTime = 1.89f;
             gun.InfiniteAmmo = true;
             gun.quality = PickupObject.ItemQuality.SPECIAL;
             gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(56) as Gun).muzzleFlashEffects;

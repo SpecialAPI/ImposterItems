@@ -117,7 +117,7 @@ namespace ImposterItems
 			return new Vector4(vector.x, vector.y, 0f, 0f);
 		}
 
-		private void LateUpdate()
+		public void LateUpdate()
 		{
 			if (this.m_material != null && this.m_isCurrentlyActive)
 			{
@@ -230,12 +230,12 @@ namespace ImposterItems
 			Vector2 vector = user.unadjustedAimPoint.XY() - user.CenterPosition;
 			float zRotation = BraveMathCollege.Atan2Degrees(vector);
 			float rayDamage = 5f;
-			float rayLength = 1.6875f;
+			float rayLength = 101.25f;
 			this.stabVfx.SpawnAtPosition(user.CenterPosition, zRotation, user.transform, null, null, new float?(1f), false, null, user.sprite, true);
 			user.StartCoroutine(this.HandleSwing(user, vector, rayDamage, rayLength));
 		}
 
-		private IEnumerator HandleSwing(PlayerController user, Vector2 aimVec, float rayDamage, float rayLength)
+		private IEnumerator HandleSwing(PlayerController user, Vector2 aimVec, float rayDamagePerSecond, float rayLength)
 		{
 			this.isStabbing = true;
 			float elapsed = 0f;
@@ -245,7 +245,7 @@ namespace ImposterItems
 				SpeculativeRigidbody hitRigidbody = this.IterativeRaycast(user.CenterPosition, aimVec, rayLength, int.MaxValue, user.specRigidbody);
 				if (hitRigidbody && hitRigidbody.aiActor && hitRigidbody.aiActor.IsNormalEnemy)
 				{
-					hitRigidbody.aiActor.healthHaver.ApplyDamage(rayDamage, aimVec, "Imposter's Knife", CoreDamageTypes.None, DamageCategory.Normal, false, null, false);
+					hitRigidbody.aiActor.healthHaver.ApplyDamage(rayDamagePerSecond * BraveTime.DeltaTime, aimVec, "Imposter's Knife", CoreDamageTypes.None, DamageCategory.Normal, false, null, false);
 				}
 				yield return null;
 			}
