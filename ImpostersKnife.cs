@@ -229,8 +229,8 @@ namespace ImposterItems
             }
 			Vector2 vector = user.unadjustedAimPoint.XY() - user.CenterPosition;
 			float zRotation = BraveMathCollege.Atan2Degrees(vector);
-			float rayDamage = 5f;
-			float rayLength = 101.25f;
+			float rayDamage = 300f;
+			float rayLength = 1.6875f;
 			this.stabVfx.SpawnAtPosition(user.CenterPosition, zRotation, user.transform, null, null, new float?(1f), false, null, user.sprite, true);
 			user.StartCoroutine(this.HandleSwing(user, vector, rayDamage, rayLength));
 		}
