@@ -10,6 +10,7 @@
     <RootNamespace>ImposterItems</RootNamespace>
     <AssemblyName>ImposterItems</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <LangVersion>latest</LangVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
@@ -35,6 +36,7 @@
   <ItemGroup>
     <Compile Include="ImpostersKnife.cs" />
     <Compile Include="ImpostersSidearm.cs" />
+    <Compile Include="PetOffsetHolder.cs" />
     <Compile Include="VotingInterface.cs" />
     <Compile Include="LilCrewmate.cs" />
     <Compile Include="Plugin.cs" />
