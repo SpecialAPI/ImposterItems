@@ -8,7 +8,7 @@ using ItemAPI;
 
 namespace ImposterItems
 {
-    [BepInPlugin(GUID, "Imposter Items", "1.0.5")]
+    [BepInPlugin(GUID, "Imposter Items", "1.0.6")]
     [BepInDependency(ETGModMainBehaviour.GUID)]
     public class Plugin : BaseUnityPlugin
     {
