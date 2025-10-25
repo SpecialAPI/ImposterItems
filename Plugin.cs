@@ -22,6 +22,7 @@ namespace ImposterItems
         public void GMStart(GameManager game)
         {
             new Harmony(GUID).PatchAll();
+            ETGMod.Assets.SetupSpritesFromAssembly(typeof(Plugin).Assembly, "ImposterItems/Resources/MTGAPISpriteRoot");
 
             LilCrewmate.Init();
             VotingInterface.Init();
