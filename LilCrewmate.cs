@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using ItemAPI;
+using Alexandria.ItemAPI;
 using Gungeon;
 using DirectionType = DirectionalAnimation.DirectionType;
-using AnimationType = ItemAPI.CompanionBuilder.AnimationType;
+using AnimationType = Alexandria.ItemAPI.CompanionBuilder.AnimationType;
 using FlipType = DirectionalAnimation.FlipType;
 using MonoMod.RuntimeDetour;
 
@@ -83,8 +83,10 @@ namespace ImposterItems
             prefab.AddAnimation("idle_left", "ImposterItems/Resources/Crewmate/IdleLeft", 5, AnimationType.Idle, DirectionType.TwoWayHorizontal);
             prefab.AddAnimation("run_right", "ImposterItems/Resources/Crewmate/MoveRight", 16, AnimationType.Move, DirectionType.TwoWayHorizontal);
             prefab.AddAnimation("run_left", "ImposterItems/Resources/Crewmate/MoveLeft", 16, AnimationType.Move, DirectionType.TwoWayHorizontal);
-            prefab.AddAnimation("pet_right", "ImposterItems/Resources/Crewmate/PetRight", 5, AnimationType.Move, DirectionType.TwoWayHorizontal, assignAnimation: false);
-            prefab.AddAnimation("pet_left", "ImposterItems/Resources/Crewmate/PetLeft", 5, AnimationType.Move, DirectionType.TwoWayHorizontal, assignAnimation: false);
+
+            var aiAnimator = companion.gameObject.GetOrAddComponent<AIAnimator>();
+            CompanionBuilder.BuildAnimation(aiAnimator, "pet_right", "ImposterItems/Resources/Crewmate/PetRight", 5);
+            CompanionBuilder.BuildAnimation(aiAnimator, "pet_left", "ImposterItems/Resources/Crewmate/PetLeft", 5);
 
             var petAnim = new DirectionalAnimation()
             {

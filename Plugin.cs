@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using BepInEx;
 using HarmonyLib;
-using ItemAPI;
 
 namespace ImposterItems
 {
@@ -14,7 +13,7 @@ namespace ImposterItems
     {
         public const string GUID = "spapi.etg.imposteritems";
 
-        public void Awake()
+        public void Start()
         {
             ETGModMainBehaviour.WaitForGameManagerStart(GMStart);
         }
@@ -23,7 +22,6 @@ namespace ImposterItems
         {
             new Harmony(GUID).PatchAll();
 
-            ItemBuilder.Init();
             LilCrewmate.Init();
             VotingInterface.Init();
             ImpostersKnife.Init();
