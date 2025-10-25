@@ -7,12 +7,12 @@ using HarmonyLib;
 
 namespace ImposterItems
 {
-    [BepInPlugin(GUID, "Imposter Items", "1.0.6")]
+    [BepInPlugin(MOD_GUID, "Imposter Items", "1.0.6")]
     [BepInDependency(ETGModMainBehaviour.GUID)]
     [BepInDependency(Alexandria.Alexandria.GUID)]
     public class Plugin : BaseUnityPlugin
     {
-        public const string GUID = "spapi.etg.imposteritems";
+        public const string MOD_GUID = "spapi.etg.imposteritems";
 
         public void Start()
         {
@@ -21,7 +21,7 @@ namespace ImposterItems
 
         public void GMStart(GameManager game)
         {
-            new Harmony(GUID).PatchAll();
+            new Harmony(MOD_GUID).PatchAll();
             ETGMod.Assets.SetupSpritesFromAssembly(typeof(Plugin).Assembly, "ImposterItems/Resources/MTGAPISpriteRoot");
 
             LilCrewmate.Init();
