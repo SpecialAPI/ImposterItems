@@ -9,6 +9,7 @@ namespace ImposterItems
 {
     [BepInPlugin(GUID, "Imposter Items", "1.0.6")]
     [BepInDependency(ETGModMainBehaviour.GUID)]
+    [BepInDependency(Alexandria.Alexandria.GUID)]
     public class Plugin : BaseUnityPlugin
     {
         public const string GUID = "spapi.etg.imposteritems";
