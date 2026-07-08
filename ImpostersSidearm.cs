@@ -41,6 +41,7 @@ namespace ImposterItems
             gun.muzzleFlashEffects = (PickupObjectDatabase.GetById(56) as Gun).muzzleFlashEffects;
             gun.barrelOffset.transform.localPosition = new Vector3(1.0625f, 0.5625f, 0f);
             gun.gunClass = GunClass.PISTOL;
+            gun.PreventStartingOwnerFromDropping = true;
 
             var animator = gun.GetComponent<tk2dSpriteAnimator>();
             var shootAnim = animator.GetClipByName(gun.shootAnimation);
