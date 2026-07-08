@@ -7,7 +7,7 @@ using HarmonyLib;
 
 namespace ImposterItems
 {
-    [BepInPlugin(MOD_GUID, "Imposter Items", "1.0.7")]
+    [BepInPlugin(MOD_GUID, "Imposter Items", "1.0.8")]
     [BepInDependency(ETGModMainBehaviour.GUID)]
     [BepInDependency(Alexandria.Alexandria.GUID)]
     public class Plugin : BaseUnityPlugin
