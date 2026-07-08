@@ -6,9 +6,11 @@ using System.Text;
 using UnityEngine;
 using Alexandria.ItemAPI;
 using Gungeon;
+using HarmonyLib;
 
 namespace ImposterItems
 {
+    [HarmonyPatch]
     public class ImpostersKnife : PlayerItem
     {
         private Material m_material;
@@ -171,6 +173,44 @@ namespace ImposterItems
             m_material.SetVector("_Player2ScreenPosition", pos2);
         }
 
+        [HarmonyPatch(typeof(PlayerItem), nameof(Drop))]
+        [HarmonyPrefix]
+        public static bool OverrideKnifeDrop_Prefix(PlayerItem __instance, ref DebrisObject __result, PlayerController player, float overrideForce = 4f)
+        {
+            if (__instance is not ImpostersKnife knife)
+                return true;
+
+            __result = knife.OverrideDrop(player, overrideForce);
+            return false;
+        }
+
+        public DebrisObject OverrideDrop(PlayerController player, float overrideForce = 4f)
+        {
+            OnPreDrop(player);
+            OnPreDropEvent?.Invoke();
+
+            var spawnDirection = player.unadjustedAimPoint - player.sprite.WorldCenter.ToVector3ZUp();
+            if (player.CurrentRoom != null && player.CurrentRoom.area.PrototypeRoomCategory == PrototypeDungeonRoom.RoomCategory.SPECIAL)
+            {
+                overrideForce = 2f;
+                spawnDirection = Vector2.down;
+            }
+
+            var spawnPosition = player.sprite.WorldCenter.ToVector3ZUp();
+            var votingIntfPrefab = PickupObjectDatabase.GetById(VotingInterface.VotingInterfaceId).gameObject;
+
+            var votingIntfDebris = LootEngine.SpawnItem(votingIntfPrefab, spawnPosition, spawnDirection, overrideForce);
+            var votingIntf = votingIntfDebris.GetComponent<PlayerItem>();
+            votingIntf.m_pickedUp = false;
+            votingIntf.m_pickedUpThisRun = true;
+            votingIntf.HasBeenStatProcessed = true;
+            votingIntf.ForceApplyCooldown(player);
+            votingIntf.ResetSprite();
+            player.stats.RecalculateStats(player);
+
+            return votingIntfDebris;
+        }
+
         public override void OnPreDrop(PlayerController user)
         {
             StopAllCoroutines();
@@ -184,25 +224,6 @@ namespace ImposterItems
                 user.SetIsStealthed(false, "voting interface");
                 user.SetCapableOfStealing(false, "VotingInterface", null);
             }
-
-            EncounterTrackable.SuppressNextNotification = true;
-            var votingIntf = Instantiate(PickupObjectDatabase.GetById(VotingInterface.VotingInterfaceId).gameObject, Vector2.zero, Quaternion.identity).GetComponent<PlayerItem>();
-            votingIntf.ForceAsExtant = true;
-            votingIntf.Pickup(user);
-            EncounterTrackable.SuppressNextNotification = false;
-
-            foreach (var item in user.activeItems)
-            {
-                if (item is not VotingInterface)
-                    continue;
-
-                item.ForceApplyCooldown(user);
-                user.DropActiveItem(item);
-                break;
-            }
-
-            user.RemoveActiveItem(PickupObjectId);
-            Destroy(gameObject);
         }
 
         public override void DoEffect(PlayerController user)
